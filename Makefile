@@ -6,12 +6,9 @@ build:
 
 run: WORKDIR = $(shell if [ "$(shell basename $(shell pwd))" = "ai-hedge-fund" ]; then pwd; else echo "Error: Not in ai-hedge-fund directory" >&2; exit 1; fi)
 run: 
-	docker run -d -v $(WORKDIR):/app/ --name $(CONTAINER_NAME) $(IMAGE_NAME) sleep 50000
+	docker run -it -v $(WORKDIR):/app/ --name $(CONTAINER_NAME) $(IMAGE_NAME) /bin/bash
 
-up: build run
-
-bash:
-	docker exec -it $(CONTAINER_NAME) sh
+dev: build run
 
 stop:
 	docker stop $(CONTAINER_NAME)
